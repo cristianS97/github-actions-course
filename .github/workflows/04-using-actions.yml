@@ -3,6 +3,9 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    # default:
+      # run:
+        # working-directory: reactapp/
     steps:
       # Checkout the code from the repository
       - name: Checkout Code
@@ -20,3 +23,6 @@ jobs:
         run: npm install
         working-directory: reactapp/
       # Execute automated tests
+      - name: Run unit tests
+        run: npm run test
+        working-directory: reactapp/
