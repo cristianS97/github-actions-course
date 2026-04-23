@@ -16,4 +16,5 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: npm ci
+        working-directory: react-app/
       # Execute automated tests
