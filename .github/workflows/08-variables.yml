@@ -6,9 +6,9 @@ env:
   WORKFLOW_VAR: "I am a workflow env var"
   OVERWRITTEN_WORKFLOW_VAR: "I am a workflow env var 2"
 jobs:
-  env:
-    JOB_VAR: "I am a job var"
   echo:
+    env:
+      JOB_VAR: "I am a job var"
     runs-on: ubuntu-latest
     steps:
       - name: Print Env Variables
