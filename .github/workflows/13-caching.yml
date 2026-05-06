@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: 13-caching/reactapp
+        working-directory: reactapp
     outputs:
       deps-cache-key: ${{ steps.cache-key.outputs.CACHE_KEY }}
     steps:
@@ -31,13 +31,13 @@ jobs:
           node-version: ${{ inputs.node-version }}
       - name: Calculate the hash key
         id: cache-key
-        run: echo "CACHE_KEY=deps-node-modules-${{ hashFiles('13-caching/reactapp/package-lock.json') }}" >> "$GITHUB_OUTPUT"
+        run: echo "CACHE_KEY=deps-node-modules-${{ hashFiles('reactapp/package-lock.json') }}" >> "$GITHUB_OUTPUT"
       - name: Download cached dependencies
         uses: actions/cache@v3
         if: ${{ inputs.use-cache }}
         id: cache
         with:
-          path: 13-caching/reactapp/node_modules
+          path: reactapp/node_modules
           key: ${{ steps.cache-key.outputs.CACHE_KEY }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -47,7 +47,7 @@ jobs:
     needs: install-deps
     defaults:
       run:
-        working-directory: 13-caching/reactapp
+        working-directory: reactapp
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -60,7 +60,7 @@ jobs:
         if: ${{ inputs.use-cache }}
         id: cache
         with:
-          path: 13-caching/reactapp/node_modules
+          path: reactapp/node_modules
           key: ${{ needs.install-deps.outputs.deps-cache-key }}
       - name: Testing
         run: npm run test
@@ -71,7 +71,7 @@ jobs:
     needs: install-deps
     defaults:
       run:
-        working-directory: 13-caching/reactapp
+        working-directory: reactapp
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -84,7 +84,7 @@ jobs:
         if: ${{ inputs.use-cache }}
         id: cache
         with:
-          path: 13-caching/reactapp/node_modules
+          path: reactapp/node_modules
           key: ${{ needs.install-deps.outputs.deps-cache-key }}
       - name: Building
         run: npm run build
